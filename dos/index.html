@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DOS 6.22 CV</title>
+<link rel="stylesheet" href="./dos.css">
+</head>
+<body class="theme-dos">
+<div class="deck-root">
+    <div class="deck-ui">
+        <div class="deck-brand">CV<span class="blink">_</span></div>
+        <div class="deck-controls">
+            <button class="nav-btn" data-dir="prev" title="Previous (←)">◀</button>
+            <span class="deck-status" id="deckStatus">1 / 1</span>
+            <button class="nav-btn" data-dir="next" title="Next (→/Space)">▶</button>
+            <select id="themeSelect" class="deck-theme" aria-hidden="true" style="display:none">
+                <option value="dos">DOS 6.22</option>
+            </select>
+            <button class="nav-btn" id="debugBtn" title="Toggle debug (D)">DBG</button>
+            <button class="nav-btn" id="boringBtn" title="Plain CV (B)">B</button>
+            <button class="nav-btn" id="autoPlayBtn" title="Auto cycle">AUTO</button>
+        </div>
+    </div>
+    <div id="dosBanner" class="dos-banner" aria-hidden="true">Microsoft(R) MS-DOS(R) Version 6.22   (C)Copyright Microsoft Corp 1981-1994</div>
+    <div id="dosScreen" class="dos-screen" aria-hidden="true"></div>
+    <div class="slides" id="slidesContainer" aria-live="polite">
+        <div class="loading-msg" id="loadingMsg">Loading profile…</div>
+    </div>
+    <footer class="deck-footer">&copy; 2025 Michael Amadeus Christiansen</footer>
+</div>
+<script src="./dos.js"></script>
+</body>
+</html>

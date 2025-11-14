@@ -1,0 +1,13 @@
+/* Minimal DOS-only styles */
+body { margin:0; padding:0; background:#000; color:#c0c0c0; font-family:'Perfect DOS VGA 437','DOS','Courier New',monospace; }
+.blink { animation: blink 1.2s steps(2,start) infinite; }
+@keyframes blink { 50% { opacity:0; } }
+.deck-root { position:relative; width:100vw; height:100vh; display:flex; flex-direction:column; }
+.deck-ui, .deck-footer { background:#000; color:#c0c0c0; border-bottom:1px solid #333; padding:6px 10px; font-size:12px; }
+.nav-btn, .deck-theme { background:#000; color:#c0c0c0; border:1px solid #777; font-family:inherit; font-size:12px; padding:2px 6px; cursor:pointer; }
+.nav-btn:hover { background:#111; }
+.slides { display:none; }
+.dos-banner { display:block; font-size:14px; padding:4px 10px; border-top:1px solid #333; border-bottom:1px solid #333; }
+.dos-screen { position:fixed; inset:0; background:#000; color:#c0c0c0; z-index:10; font-family:inherit; padding:10px 14px; white-space:pre-wrap; line-height:1.18; display:block; overflow-y:auto; overflow-x:hidden; }
+.dos-screen .line { display:block; }
+.dos-cursor { display:inline-block; width:0.6em; animation: blink 1s steps(2,start) infinite; }

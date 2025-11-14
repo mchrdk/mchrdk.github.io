@@ -1,0 +1,162 @@
+{
+  "name": "Michael Amadeus Christiansen",
+  "headline": "Development • Automation • Integration • Microsoft & Linux Infrastructure",
+  "summary": "Microsoft specialist supporting Windows servers and applications in large enterprise environments. Focus on monitoring, integration scripting, and operational tooling. Experienced across Windows, System Center (SCOM), and Linux/Unix.",
+  "facts": [
+    { "label": "Location", "value": "Central Denmark Region, Denmark" },
+    { "label": "Focus", "value": "Operations Engineering, Monitoring, Integration Development" },
+    { "label": "Top Skills", "value": "Linux • React.js • Python" }
+  ],
+  "skills": ["Linux","React.js","Python","Windows Server","SCOM","Automation","Integration","Monitoring"],
+  "languages": [
+    { "language": "English", "proficiency": "Full Professional" },
+    { "language": "Danish", "proficiency": "Native or Bilingual" },
+    { "language": "German", "proficiency": "Limited Working" }
+  ],
+  "experience": [
+    {
+      "company": "Unit IT",
+      "roles": [
+        {
+          "title": "Operations Consultant/Developer",
+          "start": "2024-06",
+          "end": null,
+          "location": "Aarhus Municipality, Denmark",
+          "highlights": ["Develop React frontends for operations workflows","Script integrations between acquired systems","Enhance automation for service integration"]
+        },
+        {
+          "title": "Operations Consultant",
+          "start": "2022-11",
+          "end": "2025-10",
+          "location": "Aarhus, Denmark",
+          "highlights": ["Operational monitoring of Windows enterprise environments","Incident troubleshooting & performance analysis"]
+        }
+      ]
+    },
+    {
+      "company": "edgemo a/s",
+      "roles": [
+        {
+          "title": "Team Lead, Cloud Services",
+          "start": "2019-11",
+          "end": "2022-10",
+          "location": "Denmark",
+          "highlights": ["Led delivery of Microsoft infrastructure & cloud services","Coordinated team workflows & service quality"]
+        },
+        {
+          "title": "Infrastructure Specialist",
+          "start": "2015-10",
+          "end": "2019-11",
+          "location": "Denmark",
+          "highlights": ["Implemented infrastructure solutions","Supported cloud adoption and operational stability"]
+        }
+      ]
+    },
+    {
+      "company": "MindZet",
+      "roles": [
+        {
+          "title": "Technology Specialist",
+          "start": "2014-10",
+          "end": "2015-10",
+          "location": "Denmark",
+          "highlights": ["Delivered SCOM development & integration","Maintained monitoring solutions"]
+        },
+        {
+          "title": "Operations Consultant",
+          "start": "2013-03",
+          "end": "2014-10",
+          "location": "Denmark",
+          "highlights": ["Designed & maintained SCOM monitoring setups","Improved infrastructure observability"]
+        }
+      ]
+    },
+    {
+      "company": "TDC Hosting",
+      "roles": [
+        {
+          "title": "Senior System Administrator",
+          "start": "2010-02",
+          "end": "2013-03",
+          "location": "Denmark",
+          "highlights": ["Solution design for Windows monitoring platform","Developed management packs & integrations"]
+        },
+        {
+          "title": "Windows System Administrator",
+          "start": "2006-11",
+          "end": "2010-01",
+          "location": "Denmark",
+          "highlights": ["Administration of managed Windows environments"]
+        }
+      ]
+    },
+    {
+      "company": "Roskilde Festival",
+      "roles": [
+        {
+          "title": "IT-Support Supervisor (Cash & Credit Systems)",
+          "start": "2011-01",
+          "end": "2011-10",
+          "location": "Denmark",
+          "highlights": ["Supervised payment system support during festival operations"]
+        },
+        {
+          "title": "IT Support Supervisor",
+          "start": "2007-01",
+          "end": "2010-12",
+          "location": "Denmark",
+          "highlights": ["Coordinated IT support during large event periods"]
+        }
+      ]
+    },
+    {
+      "company": "Hjelmrode Ungdomsklub",
+      "roles": [
+        {
+          "title": "System Administrator",
+          "start": "2000-01",
+          "end": "2006-11",
+          "location": "Denmark",
+          "highlights": ["Supported computers, telephony & networking systems"]
+        }
+      ]
+    },
+    {
+      "company": "Danfoss Drives A/S",
+      "roles": [
+        {
+          "title": "Data Apprentice (.NET Intranet Development)",
+          "start": "2001-03",
+          "end": "2006-10",
+          "location": "Denmark",
+          "highlights": ["Developed .NET solutions for internal use","Supported project-oriented development"]
+        }
+      ]
+    },
+    {
+      "company": "Rugkobbelskolen",
+      "roles": [
+        {
+          "title": "System Administrator (Study Job)",
+          "start": "1998-01",
+          "end": "2000-08",
+          "location": "Denmark",
+          "highlights": ["Maintained systems & performed software/hardware troubleshooting"]
+        }
+      ]
+    }
+  ],
+  "education": [
+    { "institution": "Euc Syd", "start": "2002", "end": "2006", "details": "Technical education (2002–2006)" }
+  ],
+  "projects": [
+    { "title": "Windows Monitoring Platform Evolution", "description": "Development of management packs & integration tooling (placeholder)." },
+    { "title": "Operations Integration Automation", "description": "Scripts linking acquired systems for smoother onboarding." }
+  ],
+  "contact": {
+    "email": "mc@extremenerd.dk",
+    "linkedin": "linkedin.com/in/mchrdk",
+    "github": "github.com/placeholder",
+    "website": "mchr.dk"
+  }
+}
