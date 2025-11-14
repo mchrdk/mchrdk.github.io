@@ -99,6 +99,17 @@
     try{
         const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints>0;
         if(isTouchDevice){
+            console.log('dos: touch device detected, enabling mobile keyboard helper');
+            // inject CSS to ensure the helper UI is visible on all devices/browsers
+            try{
+                const style = document.createElement('style');
+                style.id = 'dos-mobile-helper-style';
+                style.textContent = `
+                    #openKeyboardBtn{position:fixed; right:12px; bottom:64px; z-index:2147483647; width:48px; height:48px; border-radius:8px; font-size:20px; background:#222; color:#fff; border:none; box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+                    #mobileKeyboardInput{position:fixed; left:10px; right:10px; bottom:10px; z-index:2147483646; padding:8px 12px; font-size:18px; border-radius:8px; border:1px solid rgba(0,0,0,0.25); background:#fff; box-sizing:border-box;}
+                `;
+                (document.head||document.documentElement).appendChild(style);
+            }catch(e){console.warn('dos: failed to inject mobile helper styles', e);} 
             const mobileInput = document.createElement('input');
             mobileInput.type = 'text';
             mobileInput.id = 'mobileKeyboardInput';
@@ -149,6 +160,7 @@
                 boxShadow:'0 2px 6px rgba(0,0,0,0.3)'
             });
             document.body.appendChild(kbBtn);
+            console.log('dos: openKeyboardBtn appended to body');
 
             const openKeyboard = (ev)=>{
                 try{
