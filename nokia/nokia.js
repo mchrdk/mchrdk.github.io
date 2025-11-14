@@ -20,7 +20,7 @@
 
     function clearBoot(){ bootTimers.forEach(t=>clearTimeout(t)); bootTimers=[]; }
     function runBoot(){ screen.innerHTML=''; bootDone=false; inputBuffer=''; clearBoot(); const steps=[
-        {t:0,s:'NOKIA 7110 Emulator'},
+        {t:0,s:'NOKIA 3310 Emulator'},
         {t:300,s:'Initializing system...'},
         {t:700,s:'Loading profile...'},
         {t:1100,s:''},{t:1400,s:'Starting interface...'}
