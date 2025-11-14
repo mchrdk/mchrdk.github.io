@@ -18,7 +18,7 @@
             screen.scrollTop = screen.scrollHeight;
         };
 
-        const printLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); ensureScroll(); };
+    const dosPrintLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); ensureScroll(); };
         const setPrompt=()=>{ const prompt=document.createElement('div'); prompt.className='line'; prompt.innerHTML='C:\\><span class="dos-cursor">_</span>'; screen.appendChild(prompt); ensureScroll(); };
     const clearBoot=()=>{ bootTimers.forEach(t=>clearTimeout(t)); bootTimers=[]; };
     const runBoot=()=>{ screen.innerHTML=''; bootDone=false; inputBuffer=''; clearBoot(); const steps=[
@@ -31,7 +31,7 @@
         {t:2000,s:' AMIBIOS Date      : 06/06/92           Parallel Port(s)   : 378'},
         {t:2400,s:''},{t:2600,s:'64KB CACHE MEMORY'},{t:3200,s:'Starting MS-DOS...'},
         {t:4200,s:''},{t:4400,s:'C:\\>REM C:\\DOS\\SMARTDRV.EXE'},{t:4800,s:'C:\\>ver'},{t:5200,s:'MS-DOS Version 6.22'},{t:5600,s:''}
-    ]; steps.forEach(step=>bootTimers.push(setTimeout(()=>printLine(step.s),step.t))); bootTimers.push(setTimeout(()=>{bootDone=true; setPrompt();},6000)); };
+    ]; steps.forEach(step=>bootTimers.push(setTimeout(()=>dosPrintLine(step.s),step.t))); bootTimers.push(setTimeout(()=>{bootDone=true; setPrompt();},6000)); };
     runBoot();
     // Load profile for CV/skills commands
     fetch('../data/profile.json').then(r=>r.ok?r.json():null).then(p=>{ window.__cv_profile=p; }).catch(()=>{});
@@ -60,38 +60,38 @@
             return r.text();
         }).then(text=>{
             const lines = renderMarkdownToLines(text);
-            lines.forEach(l=>printLine(l));
+            lines.forEach(l=>dosPrintLine(l));
         }).catch(()=>{
-            if(typeof fallback==='function') fallback(); else printLine(fallback||'Unable to load file');
+            if(typeof fallback==='function') fallback(); else dosPrintLine(fallback||'Unable to load file');
         });
     };
 
     // command processor extracted so mobile input can reuse it
     const handleCommand = (cmdRaw)=>{
         const cmd = (cmdRaw||'').trim().toLowerCase();
-        if(cmd==='ver'){ printLine('MS-DOS Version 6.22'); }
+        if(cmd==='ver'){ dosPrintLine('MS-DOS Version 6.22'); }
         else if(cmd==='dir'||cmd==='dir.exe'){
-            printLine(' Volume in drive C is PARADOX'); printLine(' Volume Serial Number is 42A7-1987'); printLine(' Directory of C:\\'); const now=new Date(); const pad=n=>n.toString().padStart(2,'0'); const dateStr=`${pad(now.getMonth()+1)}-${pad(now.getDate())}-${now.getFullYear().toString().slice(-2)}`; printLine('');
-            printLine(`${dateStr}  12:00p            27,648 DIR.EXE`); printLine(`${dateStr}  12:00p            32,768 SKILLS.EXE`); printLine(`${dateStr}  12:00p            64,512 CV.EXE`); printLine(`${dateStr}  12:00p           393,216 DOOM.EXE`);
-            printLine('               5 File(s)        518,144 bytes'); printLine('               0 Dir(s)   12,345,678 bytes free');
+            dosPrintLine(' Volume in drive C is PARADOX'); dosPrintLine(' Volume Serial Number is 42A7-1987'); dosPrintLine(' Directory of C:\\'); const now=new Date(); const pad=n=>n.toString().padStart(2,'0'); const dateStr=`${pad(now.getMonth()+1)}-${pad(now.getDate())}-${now.getFullYear().toString().slice(-2)}`; dosPrintLine('');
+            dosPrintLine(`${dateStr}  12:00p            27,648 DIR.EXE`); dosPrintLine(`${dateStr}  12:00p            32,768 SKILLS.EXE`); dosPrintLine(`${dateStr}  12:00p            64,512 CV.EXE`); dosPrintLine(`${dateStr}  12:00p           393,216 DOOM.EXE`);
+            dosPrintLine('               5 File(s)        518,144 bytes'); dosPrintLine('               0 Dir(s)   12,345,678 bytes free');
         }
         else if(cmd==='cv'||cmd==='cv.exe'){
             // prefer a markdown file for richer CV content; fallback to JSON-based summary
             fetchAndPrintMarkdown('../data/cv.md', ()=>{
-                const prof=window.__cv_profile; if(!prof){ printLine('Unable to load profile data'); } else { printLine('--- CV SUMMARY ---'); printLine(prof.name||''); if(prof.headline) printLine(prof.headline); if(prof.summary) printLine(prof.summary.replace(/\n+/g,' ')); if(Array.isArray(prof.experience)&&prof.experience.length){ printLine(''); printLine('EXPERIENCE:'); prof.experience.slice(0,5).forEach(c=>{ if(c.company) printLine(' '+c.company); (c.roles||[]).slice(0,2).forEach(r=>{ const timeframe=[r.start||'', r.end||'Present'].filter(Boolean).join(' - '); printLine(`   ${r.title||''} (${timeframe})`); (r.highlights||[]).slice(0,2).forEach(h=>printLine('     * '+h)); }); }); }
-                if(prof.skills){ printLine(''); printLine('SKILLS: '+prof.skills.slice(0,20).join(', ')); } if(prof.contact&&prof.contact.email){ printLine('CONTACT: '+prof.contact.email); } printLine('--- END CV ---'); }
+                const prof=window.__cv_profile; if(!prof){ dosPrintLine('Unable to load profile data'); } else { dosPrintLine('--- CV SUMMARY ---'); dosPrintLine(prof.name||''); if(prof.headline) dosPrintLine(prof.headline); if(prof.summary) dosPrintLine(prof.summary.replace(/\n+/g,' ')); if(Array.isArray(prof.experience)&&prof.experience.length){ dosPrintLine(''); dosPrintLine('EXPERIENCE:'); prof.experience.slice(0,5).forEach(c=>{ if(c.company) dosPrintLine(' '+c.company); (c.roles||[]).slice(0,2).forEach(r=>{ const timeframe=[r.start||'', r.end||'Present'].filter(Boolean).join(' - '); dosPrintLine(`   ${r.title||''} (${timeframe})`); (r.highlights||[]).slice(0,2).forEach(h=>dosPrintLine('     * '+h)); }); }); }
+                if(prof.skills){ dosPrintLine(''); dosPrintLine('SKILLS: '+prof.skills.slice(0,20).join(', ')); } if(prof.contact&&prof.contact.email){ dosPrintLine('CONTACT: '+prof.contact.email); } dosPrintLine('--- END CV ---'); }
             });
         }
         else if(cmd==='skills'||cmd==='skills.exe'){
             fetchAndPrintMarkdown('../data/skills.md', ()=>{
-                const prof=window.__cv_profile; if(!prof||!Array.isArray(prof.skills)||!prof.skills.length){ printLine('No skills data loaded'); } else { printLine('--- SKILLS ---'); prof.skills.forEach(s=>printLine(' '+s)); printLine('--- END SKILLS ---'); }
+                const prof=window.__cv_profile; if(!prof||!Array.isArray(prof.skills)||!prof.skills.length){ dosPrintLine('No skills data loaded'); } else { dosPrintLine('--- SKILLS ---'); prof.skills.forEach(s=>dosPrintLine(' '+s)); dosPrintLine('--- END SKILLS ---'); }
             });
         }
         else if(cmd==='doom'||cmd==='doom.exe'){
-            printLine('Launching DOOM (open in new tab)...'); window.open('https://diekmann.github.io/wasm-fizzbuzz/doom/','_blank','noopener');
+            dosPrintLine('Launching DOOM (open in new tab)...'); window.open('https://diekmann.github.io/wasm-fizzbuzz/doom/','_blank','noopener');
         }
         else if(cmd==='help'){
-            fetchAndPrintMarkdown('../data/help.md', ()=>{ printLine('Commands: VER, DIR, CV.EXE, SKILLS.EXE, DOOM.EXE, CLS, HELP, EXIT'); });
+            fetchAndPrintMarkdown('../data/help.md', ()=>{ dosPrintLine('Commands: VER, DIR, CV.EXE, SKILLS.EXE, DOOM.EXE, CLS, HELP, EXIT'); });
         }
         else if(cmd==='cls'){ screen.innerHTML=''; }
         else if(cmd==='exit'){ /* stays in DOS theme, but could hide screen if desired */ }
