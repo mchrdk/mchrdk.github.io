@@ -14,7 +14,7 @@
         {t:1700,s:' Display Type      : VGA/PGA/EGA        Serial Port(s)     : 3F8,2F8'},
         {t:2000,s:' AMIBIOS Date      : 06/06/92           Parallel Port(s)   : 378'},
         {t:2400,s:''},{t:2600,s:'64KB CACHE MEMORY'},{t:3200,s:'Starting MS-DOS...'},
-        {t:4200,s:''},{t:4400,s:'C:\\>REM C:\\DOS\\SMARTDRV.EXE'},{t:4800,s:'C:\\>ver'},{t:5200,s:'MS-DOS Version 6.00'},{t:5600,s:''}
+        {t:4200,s:''},{t:4400,s:'C:\\>REM C:\\DOS\\SMARTDRV.EXE'},{t:4800,s:'C:\\>ver'},{t:5200,s:'MS-DOS Version 6.22'},{t:5600,s:''}
     ]; steps.forEach(step=>bootTimers.push(setTimeout(()=>printLine(step.s),step.t))); bootTimers.push(setTimeout(()=>{bootDone=true; setPrompt();},6000)); };
     runBoot();
     // Load profile for CV/skills commands
