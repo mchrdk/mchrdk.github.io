@@ -53,7 +53,7 @@
     // command processor extracted so mobile input can reuse it
     const handleCommand = (cmdRaw)=>{
         const cmd = (cmdRaw||'').trim().toLowerCase();
-        if(cmd==='ver'){ printLine('MS-DOS Version 6.00'); }
+        if(cmd==='ver'){ printLine('MS-DOS Version 6.22'); }
         else if(cmd==='dir'||cmd==='dir.exe'){
             printLine(' Volume in drive C is PARADOX'); printLine(' Volume Serial Number is 42A7-1987'); printLine(' Directory of C:\\'); const now=new Date(); const pad=n=>n.toString().padStart(2,'0'); const dateStr=`${pad(now.getMonth()+1)}-${pad(now.getDate())}-${now.getFullYear().toString().slice(-2)}`; printLine('');
             printLine(`${dateStr}  12:00p            27,648 DIR.EXE`); printLine(`${dateStr}  12:00p            32,768 SKILLS.EXE`); printLine(`${dateStr}  12:00p            64,512 CV.EXE`); printLine(`${dateStr}  12:00p           393,216 DOOM.EXE`);
