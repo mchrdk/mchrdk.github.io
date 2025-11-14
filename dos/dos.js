@@ -97,12 +97,16 @@
 
     // Mobile support: visible text input on touch devices that summons the virtual keyboard
     try{
-        if(('ontouchstart' in window) || navigator.maxTouchPoints>0){
+        const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints>0;
+        if(isTouchDevice){
             const mobileInput = document.createElement('input');
             mobileInput.type = 'text';
             mobileInput.id = 'mobileKeyboardInput';
             mobileInput.autocapitalize = 'off';
             mobileInput.autocorrect = 'off';
+            mobileInput.setAttribute('autocomplete','off');
+            mobileInput.setAttribute('inputmode','text');
+            mobileInput.setAttribute('enterkeyhint','done');
             mobileInput.spellcheck = false;
             // basic inline style so we don't require CSS changes
             Object.assign(mobileInput.style,{
@@ -118,13 +122,11 @@
                 background: 'white',
                 boxSizing: 'border-box'
             });
-            // only show on narrow screens
-            const mql = window.matchMedia('(max-width:768px)');
-            const updateVisibility = ()=>{ mobileInput.style.display = mql.matches ? 'block' : 'none'; };
-            if(mql.addEventListener) mql.addEventListener('change', updateVisibility); else mql.addListener(updateVisibility);
-            updateVisibility();
+            // For touch devices we'll show the input so the virtual keyboard can be summoned.
+            // Some Android browsers don't open the keyboard on passive touch handlers or when
+            // the devicePixelRatio/viewport makes the media query false, so prefer touch detection.
+            Object.assign(mobileInput.style,{display:'block'});
             document.body.appendChild(mobileInput);
-
             // reflect input into DOS inputBuffer and screen
             mobileInput.addEventListener('input', ()=>{
                 inputBuffer = mobileInput.value;
@@ -144,13 +146,15 @@
                 }
             });
 
-            // focus input when user taps the screen to open keyboard quickly
-            document.addEventListener('touchstart', (ev)=>{
-                // do not steal focus if user touches an interactive control
+            // focus input when user taps the screen to open keyboard quickly.
+            // Use touchend/click (non-passive) which works more reliably on Android.
+            const focusMobileInput = (ev)=>{
                 const target = ev.target;
                 if(target && (target.tagName==='INPUT' || target.tagName==='BUTTON' || target.tagName==='A' || target.isContentEditable)) return;
-                mobileInput.focus();
-            }, {passive:true});
+                try{ mobileInput.focus(); }catch(e){}
+            };
+            document.addEventListener('touchend', focusMobileInput, false);
+            document.addEventListener('click', focusMobileInput, false);
         }
     }catch(err){ /* non-critical */ }
 })();
