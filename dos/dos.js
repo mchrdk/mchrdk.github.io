@@ -1,9 +1,25 @@
 // DOS standalone logic (extracted from combined script) + commands, without paradox visuals
 (function(){
     let bootTimers=[]; let bootDone=false; let inputBuffer='';
+        // hold a reference to the mobile input when created so scroll adjustments can use its height
+        let mobileInput = null;
     const screen=document.getElementById('dosScreen'); if(!screen) return;
     const printLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); screen.scrollTop=screen.scrollHeight; };
     const setPrompt=()=>{ const prompt=document.createElement('div'); prompt.className='line'; prompt.innerHTML='C:\\><span class="dos-cursor">_</span>'; screen.appendChild(prompt); screen.scrollTop=screen.scrollHeight; };
+        // adjust scrolling: if mobile input is focused, leave a gap so the last lines are visible above the keyboard
+        const ensureScroll = ()=>{
+            try{
+                if(mobileInput && document.activeElement===mobileInput){
+                    const extra = (mobileInput.offsetHeight||64) + 16; // leave space above keyboard
+                    screen.scrollTop = Math.max(0, screen.scrollHeight - screen.clientHeight + extra);
+                    return;
+                }
+            }catch(e){}
+            screen.scrollTop = screen.scrollHeight;
+        };
+
+        const printLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); ensureScroll(); };
+        const setPrompt=()=>{ const prompt=document.createElement('div'); prompt.className='line'; prompt.innerHTML='C:\\><span class="dos-cursor">_</span>'; screen.appendChild(prompt); ensureScroll(); };
     const clearBoot=()=>{ bootTimers.forEach(t=>clearTimeout(t)); bootTimers=[]; };
     const runBoot=()=>{ screen.innerHTML=''; bootDone=false; inputBuffer=''; clearBoot(); const steps=[
         {t:0,s:'AMIBIOS System Configuration (C) 1985-1992, American Megatrends Inc.,'},
@@ -110,7 +126,7 @@
                 `;
                 (document.head||document.documentElement).appendChild(style);
             }catch(e){console.warn('dos: failed to inject mobile helper styles', e);} 
-            const mobileInput = document.createElement('input');
+            mobileInput = document.createElement('input');
             mobileInput.type = 'text';
             mobileInput.id = 'mobileKeyboardInput';
             mobileInput.autocapitalize = 'off';
@@ -138,6 +154,8 @@
             // the devicePixelRatio/viewport makes the media query false, so prefer touch detection.
             Object.assign(mobileInput.style,{display:'block'});
             document.body.appendChild(mobileInput);
+            // when the input receives focus, adjust scroll after keyboard appears
+            mobileInput.addEventListener('focus', ()=>setTimeout(ensureScroll,350));
 
             // Add a visible 'Open keyboard' button to guarantee a direct user gesture
             const kbBtn = document.createElement('button');
