@@ -127,6 +127,43 @@
             // the devicePixelRatio/viewport makes the media query false, so prefer touch detection.
             Object.assign(mobileInput.style,{display:'block'});
             document.body.appendChild(mobileInput);
+
+            // Add a visible 'Open keyboard' button to guarantee a direct user gesture
+            const kbBtn = document.createElement('button');
+            kbBtn.id = 'openKeyboardBtn';
+            kbBtn.type = 'button';
+            kbBtn.title = 'Open keyboard';
+            kbBtn.textContent = '⌨︎';
+            Object.assign(kbBtn.style,{
+                position:'fixed',
+                right:'12px',
+                bottom:'64px',
+                zIndex:99999,
+                width:'48px',
+                height:'48px',
+                borderRadius:'8px',
+                fontSize:'20px',
+                background:'#222',
+                color:'white',
+                border:'none',
+                boxShadow:'0 2px 6px rgba(0,0,0,0.3)'
+            });
+            document.body.appendChild(kbBtn);
+
+            const openKeyboard = (ev)=>{
+                try{
+                    console.log('Attempting to focus mobile input (user gesture)');
+                    mobileInput.focus();
+                    // Some Android browsers require a short delay
+                    setTimeout(()=>{
+                        try{ mobileInput.focus(); mobileInput.click(); }catch(e){}
+                    },50);
+                    // prevent default to keep gesture ownership
+                    if(ev && ev.preventDefault) ev.preventDefault();
+                }catch(e){ console.warn('focus attempt failed', e); }
+            };
+            kbBtn.addEventListener('click', openKeyboard, false);
+            kbBtn.addEventListener('touchend', openKeyboard, false);
             // reflect input into DOS inputBuffer and screen
             mobileInput.addEventListener('input', ()=>{
                 inputBuffer = mobileInput.value;
