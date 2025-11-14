@@ -76,14 +76,54 @@
     try{
         const isTouch=('ontouchstart' in window) || navigator.maxTouchPoints>0;
         if(isTouch){
-            mobileInput = document.createElement('input');
-            mobileInput.id='nokiaMobileInput'; mobileInput.type='text'; mobileInput.autocorrect='off'; mobileInput.autocapitalize='off'; mobileInput.spellcheck=false; mobileInput.setAttribute('inputmode','text');
-            mobileInput.style.display='block'; mobileInput.style.position='fixed'; mobileInput.style.left='12px'; mobileInput.style.right='12px'; mobileInput.style.bottom='12px'; mobileInput.style.zIndex='99999';
-            document.body.appendChild(mobileInput);
-            // open button
-            const openBtn=document.getElementById('openNokiaKeyboard');
-            if(openBtn){ openBtn.addEventListener('click', (ev)=>{ try{ mobileInput.focus(); setTimeout(()=>mobileInput.focus(),120); ev.preventDefault(); }catch(e){}}, false); }
+            // prefer an embedded input inside the phone shell (WAP style) if present
+            mobileInput = document.getElementById('nokiaMobileInput');
+            if(!mobileInput){
+                mobileInput = document.createElement('input');
+                mobileInput.id='nokiaMobileInput';
+                mobileInput.type='text';
+                // fallback style for created input
+                mobileInput.style.display='block'; mobileInput.style.position='fixed'; mobileInput.style.left='12px'; mobileInput.style.right='12px'; mobileInput.style.bottom='12px'; mobileInput.style.zIndex='99999';
+                document.body.appendChild(mobileInput);
+            } else {
+                // ensure embedded input visible and styled by CSS
+                mobileInput.style.display = 'block';
+            }
 
+            mobileInput.autocorrect='off'; mobileInput.autocapitalize='off'; mobileInput.spellcheck=false; mobileInput.setAttribute('inputmode','text');
+
+            // open button focuses the embedded input (direct user gesture)
+            const openBtn=document.getElementById('openNokiaKeyboard');
+            if(openBtn){
+                // Try multiple gestures to reliably open mobile keyboards on Android.
+                const openHandler = (ev)=>{
+                    try{
+                        // focus, then scroll into view, then try focusing again after a short delay
+                        mobileInput.focus();
+                        mobileInput.scrollIntoView({block:'center', behavior:'smooth'});
+                        setTimeout(()=>{ try{ mobileInput.focus(); }catch(e){} }, 120);
+                        // some browsers respond better to a synthetic click after a user gesture
+                        try{ mobileInput.click(); }catch(e){}
+                        // don't block the native behavior
+                        ev.preventDefault();
+                    }catch(e){ console.log('nokia: open keyboard focus failed', e); }
+                };
+                openBtn.addEventListener('click', openHandler, false);
+                // also add touch handlers (non-passive) to improve reliability on some Android builds
+                openBtn.addEventListener('touchend', openHandler, {passive:false});
+            }
+
+            // softkeys: left shows help, right toggles CV/Skills quick menu
+            const left = document.getElementById('softLeft');
+            const right = document.getElementById('softRight');
+            if(left) left.addEventListener('click', ()=>{ // simple menu: help
+                nokiaPrint('--- MENU ---'); nokiaPrint('1 Help'); nokiaPrint('2 CV'); nokiaPrint('3 Skills'); setPromptNokia();
+            }, false);
+            if(right) right.addEventListener('click', ()=>{ // quick run CV
+                fetchAndPrint('../data/cv.md', ()=>{ const prof=window.__cv_profile; if(!prof) nokiaPrint('No profile'); else { nokiaPrint('--- CV ---'); nokiaPrint(prof.name||''); if(prof.headline) nokiaPrint(prof.headline); nokiaPrint('--- END ---'); } });
+            }, false);
+
+            // input wiring
             mobileInput.addEventListener('input', ()=>{ inputBuffer=mobileInput.value; const last=screen.lastElementChild; if(last) last.innerHTML='C:\\>'+inputBuffer+'<span class="nokia-cursor">_</span>'; });
             mobileInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ const last=screen.lastElementChild; if(last) last.innerHTML='C:\\>'+inputBuffer; const cmd=inputBuffer.trim().toLowerCase(); inputBuffer=''; mobileInput.value=''; handleCommandNokia(cmd); setTimeout(()=>mobileInput.focus(),50); e.preventDefault(); }});
 
