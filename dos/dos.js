@@ -4,8 +4,8 @@
         // hold a reference to the mobile input when created so scroll adjustments can use its height
         let mobileInput = null;
     const screen=document.getElementById('dosScreen'); if(!screen) return;
-    const printLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); screen.scrollTop=screen.scrollHeight; };
-    const setPrompt=()=>{ const prompt=document.createElement('div'); prompt.className='line'; prompt.innerHTML='C:\\><span class="dos-cursor">_</span>'; screen.appendChild(prompt); screen.scrollTop=screen.scrollHeight; };
+        // const printLine=(text='')=>{ const div=document.createElement('div'); div.className='line'; div.textContent=text; screen.appendChild(div); screen.scrollTop=screen.scrollHeight; };
+        // const setPrompt=()=>{ const prompt=document.createElement('div'); prompt.className='line'; prompt.innerHTML='C:\\><span class="dos-cursor">_</span>'; screen.appendChild(prompt); screen.scrollTop=screen.scrollHeight; };
         // adjust scrolling: if mobile input is focused, leave a gap so the last lines are visible above the keyboard
         const ensureScroll = ()=>{
             try{
