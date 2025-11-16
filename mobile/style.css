@@ -1,0 +1,38 @@
+:root{
+  --bg:#7ac7ff;
+}
+/* Basic mobile-friendly sizing */
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+body{display:flex;align-items:stretch;justify-content:center;background:linear-gradient(180deg,#9ad3ff 0%,#7ac7ff 100%);}
+.workbench{width:100%;max-width:480px;height:100vh;box-shadow:0 0 0 6px #333 inset;background:linear-gradient(#cfcfcf,#bdbdbd);display:flex;flex-direction:column}
+.wb-bar{height:44px;background:#c9c9c9;border-bottom:2px solid #888;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-weight:700}
+.wb-title{color:#0a0a0a}
+.wb-status{font-size:12px;color:#333}
+.wb-area{flex:1;overflow:auto;padding:14px}
+.icons{display:flex;gap:12px}
+.icon{background:transparent;border:0;padding:0;width:86px;display:flex;flex-direction:column;align-items:center;color:#000;text-decoration:none}
+.icon:active{transform:translateY(1px)}
+.icon-img{width:72px;height:72px}
+.icon-label{margin-top:6px;font-size:12px;text-align:center}
+.wb-footer{height:36px;background:#d4d4d4;border-top:2px solid #8a8a8a;display:flex;align-items:center;padding:0 10px;font-size:12px}
+
+/* Windows */
+#windows{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none}
+.window{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:92%;max-width:420px;height:86%;max-height:780px;background:#f7f7f7;border:2px solid #333;box-shadow:6px 6px 0 rgba(0,0,0,0.25);display:flex;flex-direction:column;pointer-events:auto}
+.titlebar{background:linear-gradient(#e9e9e9,#cfcfcf);height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;border-bottom:1px solid #666}
+.title{font-weight:700;font-size:14px}
+.controls{display:flex;gap:6px}
+.btn{width:28px;height:24px;background:#ff6666;border:1px solid #800;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;border-radius:3px}
+.content{padding:10px;overflow:auto;font-size:14px;line-height:1.4}
+
+/* Small screens tweaks */
+@media (min-width:420px){
+  .workbench{max-width:420px}
+}
+
+/* Simple markdown content styles */
+.content h1{font-size:20px;margin:6px 0}
+.content h2{font-size:18px;margin:6px 0}
+.content p{margin:8px 0}
+.content ul{margin:8px 0 8px 18px}
+.content a{color:#0366d6}
